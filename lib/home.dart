@@ -315,48 +315,42 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final prompt =
         '''
-You are a movie expert with deep knowledge of emotional storytelling, genres, and audience mood alignment.
+        You are a movie expert with deep knowledge of emotional storytelling, genre theory, and cinematic alignment with music.
 
-I have a song with the following characteristics:
-- Title: "${songDetails.name}"
-- Tempo: ${songDetails.tempoString}
-- Mood (Valence): ${songDetails.valenceDescription}
-- Danceability: ${songDetails.danceabilityDescription}
-- Main Genre: ${songDetails.genreString}
+I have a song with the following details:
+- 🎵 Title: "${songDetails.name}"
+- 🎤 Artist ID: ${songDetails.spotifyArtistId ?? "Unknown Artist"}
+- 🎚️ Tempo: ${songDetails.tempoString}
+- 💫 Mood (Valence): ${songDetails.valenceDescription}
+- 🕺 Danceability: ${songDetails.danceabilityDescription}
+- 🎼 Main Genre: ${songDetails.genreString}
 
-Your task is to suggest **exactly 5 real, existing movies** that emotionally and tonally align with the **feel of this song** based on the above characteristics.
+🔧 Task:
 
-Each movie should match the song’s **energy, pacing, mood, and genre influence**. For example:
-- A high-tempo, happy, danceable pop song → a feel-good musical, romantic comedy, or vibrant teen drama.
-- A slow, melancholic, low-danceability piece → a contemplative drama, indie romance, or tragic character study.
+1. **Generate lyrics** as accurately as possible in a natural song format (with verses and choruses). If real lyrics are not accessible, **infer them** based on the song’s title, artist ID (style), and genre influence.
 
-⚠️ Return only a clean JSON array with **full movie titles (including release year)** and optionally their **IMDb IDs**.
+2. Then, based on:
+   - The **emotional tone**, **pacing**, and **themes** of those lyrics
+   - The song’s **energy**, **tempo**, **mood**, **danceability**, and **genre influence**
 
-📦 Format: (Strict)
+🎬 Return exactly **5 real, released movies** that align with the **emotional and cinematic feel** of this song.
+
+Think of these movies as a perfect emotional soundtrack match — films that feel like the song if it were a story.
+
+⚠️ Output Format:
+Only return the following JSON array — **no text, no explanation, no markdown**:
+
 [
   {"title": "Movie Title (Release Year)", "imdb_id": "tt1234567"},
   ...
 ]
 
-✅ Rules:
-- Titles must be **real, released films**. No made-up movies.
-- Titles must include **release year** in this exact format: `Movie Title (YYYY)`
-- `imdb_id` is optional but should start with `"tt"` and be accurate if included.
-- ❌ Do NOT include any explanation, commentary, or markdown.
-- ❌ Do NOT add any extra characters before or after the JSON array.
-- ❌ Do NOT say “Here is your result” or wrap in triple backticks.
-
-🎯 Goal:
-Make this list feel like a **perfect cinematic echo** of the song. Prioritize emotional, tonal, and thematic resonance.
-
-Example output:
-[
-  {"title": "La La Land (2016)", "imdb_id": "tt3783958"},
-  {"title": "Begin Again (2013)", "imdb_id": "tt1980929"},
-  {"title": "Call Me by Your Name (2017)", "imdb_id": "tt5726616"},
-  {"title": "The Perks of Being a Wallflower (2012)", "imdb_id": "tt1659337"},
-  {"title": "Inside Llewyn Davis (2013)", "imdb_id": "tt2042568"}
-]
+✅ Strict Rules:
+- Use full, real movie titles with **accurate release years** in the format: `"Movie Title (YYYY)"`
+- IMDb ID is optional but must be correct and begin with `"tt"` if provided
+- ❌ Do NOT include fake movies, commentary, or extra output
+- ❌ Do NOT prepend or append anything before/after the array
+- ❌ Output must be only the clean JSON array as shown
 ''';
 
     try {
